@@ -41,37 +41,24 @@ function checkCollision(rock) {
         (rockLeftEdge <= dodgerLeftEdge && rockRightEdge >= dodgerRightEdge) ||
         (rockRighttEdge >= dodgerRightEdge && rockLeftEdge <= dodgerRightEdge)) {
 console.log("Game Over!");
-      return true
+      return true;
     }
   }
 }
 
 function createRock(x) {
-  const rock = document.createElement('div')
+  const rock = document.createElement('div');
 
-  rock.className = 'rock'
-  rock.style.left = `${x}px`
-  rock.style.top = '0px';
-  /**
-   * Now that we have a rock, we'll need to append
-   * it to GAME and move it downwards.
-   */
+  rock.className = 'rock';
+  rock.style.left = IntegerToPosition(x);
+
+  var top = 0, myRq;
+  rock,style.top = "0px";
+
 GAME.appendChild(rock);
 
-  /**
-   * This function moves the rock. (2 pixels at a time
-   * seems like a good pace.)
-   */
-
-   var top = 0;
-
   function moveRock() {
-    // implement me!
-    // (use the comments below to guide you!)
-    /**
-     * If a rock collides with the DODGER,
-     * we should call endGame().
-     */
+
      rock.style.top = `${top += 2}px`;
      if (checkCollision(rock)) {
        endGame();
