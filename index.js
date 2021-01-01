@@ -61,14 +61,14 @@ GAME.appendChild(rock);
      if (checkCollision(rock)) {
        window.cancelAnimationFrame(myRq);
        endGame();
-     } 
-     
+     }
+
      else if(positionToInteger(rock.style.top) < GAME_HEIGHT + 20) {
        let top = positionToInteger(rock.style.top);
        top += ROCK_SPEED;
        rock.style.top = IntegerToPosition(top);
        myRq = window.requestAnimationFrame(moveRock);
-     } 
+     }
        else {
          window.cancelAnimationFrame(myRq);
        if (rock.parentNode && rock.parentNode.id === 'game'){
@@ -76,7 +76,7 @@ GAME.appendChild(rock);
        }
      }
    }
-  
+
   myRq = window.requestAnimationFrame(moveRock);
   ROCKS.push(rock);
   return rock;
