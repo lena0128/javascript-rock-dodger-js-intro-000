@@ -58,34 +58,28 @@ function createRock(x) {
 GAME.appendChild(rock);
 
   function moveRock() {
-
-     rock.style.top = `${top += 2}px`;
      if (checkCollision(rock)) {
+       window.cancelAnimationFrame(myRq);
        endGame();
+     } 
+     
+     else if(positionToInteger(rock.style.top) < GAME_HEIGHT + 20) {
+       let top = positionToInteger(rock.style.top);
+       top += ROCK_SPEED;
+       rock.style.top = IntegerToPosition(top);
+       myRq = window.requestAnimationFrame(moveRock);
+     } 
+       else {
+         window.cancelAnimationFrame(myRq);
+       if (rock.parentNode && rock.parentNode.id === 'game'){
+         GAME.removeChild(rock);
+       }
      }
-    /**
-     * Otherwise, if the rock hasn't reached the bottom of
-     * the GAME, we want to move it again.
-     */
-     if(top <= GAME_HEIGHT) {
-       rock.remove();
-     } else {
-       window.requestAnimationFrame(moveRock);
-     }
-    /**
-     * But if the rock *has* reached the bottom of the GAME,
-     * we should remove the rock from the DOM.
-     */
-  }
-
-  // We should kick off the animation of the rock around here.
-window.requestAnimationFrame(moveRock);
-  // Add the rock to ROCKS so that we can remove all rocks
-  // when there's a collision.
-  ROCKS.push(rock)
-
-  // Finally, return the rock element you've created.
-  return rock
+   }
+  
+  myRq = window.requestAnimationFrame(moveRock);
+  ROCKS.push(rock);
+  return rock;
 }
 
 /**
@@ -95,12 +89,13 @@ window.requestAnimationFrame(moveRock);
  * Finally, alert "YOU LOSE!" to the player.
  */
 function endGame() {
-   document.removeEventListener('keydown', moveDodger);
    window.clearInterval(gameInterval);
-   ROCKS.forEach(function(rock){
-     rock.remove();
-   });
-   alert("YOU LOSE!")
+   console.log(`num rocks: ${ROCKS.length}`);
+   for(var i = 0; i < ROCKS.length; i ++){
+     ROCKS[i].remove();
+   }
+   window.removeEventListener('keydown', moveDodger);
+   alert("YOU LOSE!");
 }
 
 function moveDodger(e) {
